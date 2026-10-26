@@ -1,3 +1,5 @@
+
+
 import os
 from datetime import date
 import psycopg2
@@ -31,7 +33,7 @@ def run_query(sql,params=(),fetch=None):
     if fetch is not None:
         columns=[]
         for col in cur.description:
-            columns.append[col(0)]
+            columns.append(col[0])
         if fetch=="one":
             row = cur.fetchone()
             if row:
@@ -41,7 +43,7 @@ def run_query(sql,params=(),fetch=None):
         else:
             result=[]
             rows=cur.fetchall()
-            for row in row:
+            for row in rows:
                 result.append(dict(zip(columns,row)))
     cur.close()
     conn.close()
