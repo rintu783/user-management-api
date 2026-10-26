@@ -30,7 +30,7 @@ A simple REST API for managing users, built with FastAPI and PostgreSQL using ra
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/<rintu783>/user-management-api.git
+git clone https://github.com/rintu783/user-management-api.git
 cd user-management-api
 ```
 
