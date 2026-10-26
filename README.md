@@ -62,7 +62,7 @@ CREATE DATABASE user_management OWNER user_api;
 Then create the table using the provided file:
 
 ```bash
-psql -h localhost -U user_api -d user_management -f schema.sql
+psql -h localhost -U user_api -d user_management -f app/schema.sql
 ```
 
 ### 5. Configure environment variables
@@ -83,7 +83,7 @@ DB_PASSWORD=change_me
 ### 6. Run the app
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 The API runs at http://127.0.0.1:8000.
