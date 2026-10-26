@@ -1,23 +1,22 @@
 
-
 import os
 from datetime import date
 import psycopg2
 from fastapi import FastAPI, HTTPException ,Response
 from dotenv import load_dotenv
-from pydantic import BaseModel
+from pydantic import BaseModel,Field
 
 load_dotenv()
 app = FastAPI(title="User Managemnet API")
 
 class User(BaseModel):
-    name: str
-    gender: str
+    name: str = Field(max_length=100)
+    gender: str = Field(max_length=20)
     age: int
-    dob: date  
+    dob: date
     address: str
-    blood_group: str
-    time_zone: str
+    blood_group: str = Field(max_length=5)
+    time_zone: str = Field(max_length=64)
 
 def run_query(sql,params=(),fetch=None):
     conn=psycopg2.connect(
@@ -48,16 +47,27 @@ def run_query(sql,params=(),fetch=None):
     cur.close()
     conn.close()
     return result
+
 #create user
 @app.post("/users",status_code=201)
 def create_user(user:User):
     sql="""INSERT INTO users(name,gender, age, dob, address, blood_group, time_zone)
            VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING *"""
     return run_query(sql,tuple(user.model_dump().values()),"one")
+
 #list user
 @app.get("/users")
 def list_users():
     return run_query("SELECT * FROM users ORDER BY id",fetch="all")
+
+#get_one user
+@app.get("/users/{user_id}")
+def get_user(user_id:int):
+    row=run_query("SELECT * FROM users WHERE id =%s",(user_id,), "one")
+    if row is None:
+        raise HTTPException(status_code=404, detail=f"User {user_id} not found")
+    return row
+
 #update user
 @app.put("/users/{user_id}")
 def update_user(user_id:int, user:User):
@@ -66,6 +76,7 @@ def update_user(user_id:int, user:User):
     if row is None:
         raise HTTPException(status_code=404,detail=f"User {user_id} not found")
     return row
+
 #delete user
 @app.delete("/users/{user_id}", status_code=204)
 def delete_user(user_id: int):
