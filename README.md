@@ -195,14 +195,14 @@ Response (422): a JSON body listing the invalid fields and the reasons.
 4. Check the status code and the response body below.
 
 Suggested test order: create a user, list users, get the user by id, update it, delete it, then request the deleted id to confirm the 404.
-## Running the endpoint tests
 
-With the app running, open a second terminal and run:
+## Running the tests
+
+With your `.env` configured and the database set up, run from the project root:
 
 ```bash
-python test_endpoints.py
+python -m pytest -v
 ```
-
 It creates a test user, checks every endpoint, and prints PASS or FAIL for each check.
 
 ## Project Structure
@@ -214,7 +214,9 @@ user-management-api/
 │   ├── main.py          # FastAPI app, routes, database helper
 │   └── schema.sql       # users table definition
 ├── setup_db.py          # interactive database and .env setup
-├── test_endpoints.py    # runs the endpoint checks against the running app
+├── tests/
+│   └── test_users.py    # endpoint tests (pytest + TestClient)
+├── pytest.ini
 ├── requirements.txt     # Python dependencies
 ├── .env.example         # template for environment variables
 └── .gitignore
