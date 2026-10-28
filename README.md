@@ -213,7 +213,7 @@ user-management-api/
 │   ├── __init__.py
 │   ├── main.py          # FastAPI app, routes, database helper
 │   └── schema.sql       # users table definition
-├── setup_db.py          # interactive database and .env setup
+├── setup.py          # interactive database and .env setup
 ├── tests/
 │   └── test_users.py    # endpoint tests (pytest + TestClient)
 ├── pytest.ini
