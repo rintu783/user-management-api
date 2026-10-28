@@ -54,7 +54,7 @@ pip install -r requirements.txt
 ### 4. Set up the database
 
 ```bash
-python setup_db.py
+python setup.py
 ```
 
 The script asks for a database name, a database user and a password. It then:
